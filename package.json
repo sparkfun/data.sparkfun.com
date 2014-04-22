@@ -1,0 +1,22 @@
+{
+  "name": "data.sparkfun.com",
+  "version": "0.0.1",
+  "description": "the data.sparkfun.com phant server config",
+  "private": true,
+  "main": "./serve",
+  "author": {
+    "name": "Todd Treece",
+    "email": "todd@uniontownlabs.org",
+    "url": "http://uniontownlabs.org"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "phant-meta-mongodb": "^1.0.1",
+    "phant-manager-http": "git+ssh://git@github.com:sfe-stash/phant-manager-sparkfun.git",
+    "phant-keychain-hex": "^0.1.2",
+    "phant": "^2.5.1",
+    "dotenv": "^0.2.7",
+    "phant-output-repeater": "^1.0.1",
+    "phant-stream-csv": "^1.3.0"
+  }
+}

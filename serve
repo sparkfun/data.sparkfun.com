@@ -1,0 +1,84 @@
+#!/usr/bin/env node
+
+var Phant = require('../phant'),
+    dotenv = require('dotenv').load(),
+    path = require('path'),
+    HttpManager = require('phant-manager-sparkfun'),
+    Keychain = require('phant-keychain-hex'),
+    Meta = require('phant-meta-mongodb'),
+    Storage = require('phant-stream-csv'),
+    Repeater = require('phant-output-repeater'),
+    app = Phant();
+
+var keys = Keychain({
+  publicSalt: process.env.PHANT_PUBLIC_SALT || 'public salt',
+  privateSalt: process.env.PHANT_PRIVATE_SALT || 'private salt'
+});
+
+var mongo = Meta({
+  url: process.env.PHANT_MONGO_URL || 'mongodb://localhost/phant'
+});
+
+var stream = Storage({
+  directory: process.env.PHANT_STORAGEDIR || 'tmp',
+  cap: process.env.PHANT_CAP || 50 * 1024 * 1024, // 50mb
+  chunk: process.env.PHANT_CHUNK || 500 * 1024 // 500k
+});
+
+var validator = Phant.Validator({
+  metadata: mongo
+});
+
+var httpOutput = Phant.HttpOutput({
+  validator: validator,
+  storage: stream,
+  keychain: keys
+});
+
+var httpInput = Phant.HttpInput({
+  throttler: Phant.MemoryThrottler(),
+  validator: validator,
+  keychain: keys
+});
+
+var httpManager = HttpManager({
+  metadata: mongo,
+  keychain: keys
+});
+
+Phant.HttpsServer.cert = process.env.SSL_CERT || './test.crt';
+Phant.HttpsServer.key = process.env.SSL_KEY || './test.key';
+
+// start listening for connections
+Phant.HttpServer.listen(process.env.PHANT_PORT || 8080);
+Phant.HttpsServer.listen(process.env.PHANT_HTTPS_PORT || 443);
+
+// attach input to http server
+Phant.HttpServer.use(httpInput);
+
+// attach manager to http server
+Phant.HttpServer.use(httpManager);
+
+Phant.HttpsServer.use(httpInput);
+Phant.HttpsServer.use(httpManager);
+
+// register manager with phant
+app.registerManager(httpManager);
+
+// attach output to http server
+Phant.HttpServer.use(httpOutput);
+Phant.HttpsServer.use(httpOutput);
+
+// register input with phant
+app.registerInput(httpInput);
+
+app.registerOutput(stream);
+app.registerOutput(httpOutput);
+
+app.registerOutput(
+  Repeater({
+    host: process.env.PHANT_REPEATER_HOST || 'localhost',
+    port: process.env.PHANT_REPEATER_PORT || 5000
+  })
+);
+
