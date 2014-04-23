@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var Phant = require('../phant'),
+var Phant = require('phant'),
     dotenv = require('dotenv').load(),
     path = require('path'),
     HttpManager = require('phant-manager-sparkfun'),
