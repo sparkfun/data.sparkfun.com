@@ -12,7 +12,8 @@ var Phant = require('phant'),
 
 var keys = Keychain({
   publicSalt: process.env.PHANT_PUBLIC_SALT || 'public salt',
-  privateSalt: process.env.PHANT_PRIVATE_SALT || 'private salt'
+  privateSalt: process.env.PHANT_PRIVATE_SALT || 'private salt',
+  deleteSalt: process.env.PHANT_DELETE_SALT || 'delete salt'
 });
 
 var mongo = Meta({
