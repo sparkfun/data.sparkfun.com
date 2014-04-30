@@ -8,6 +8,7 @@ var Phant = require('phant'),
     Meta = require('phant-meta-mongodb'),
     Storage = require('phant-stream-csv'),
     Repeater = require('phant-output-repeater'),
+    Throttler = require('phant-throttler-memcache'),
     app = Phant();
 
 var keys = Keychain({
@@ -36,8 +37,12 @@ var httpOutput = Phant.HttpOutput({
   keychain: keys
 });
 
+var throttler = Throttler({
+  host: process.env.PHANT_MEMCACHE_HOST || 'localhost:11211'
+});
+
 var httpInput = Phant.HttpInput({
-  throttler: Phant.MemoryThrottler(),
+  throttler: throttler,
   validator: validator,
   keychain: keys
 });
