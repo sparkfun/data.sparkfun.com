@@ -1,6 +1,6 @@
 {
   "name": "data.sparkfun.com",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "the data.sparkfun.com phant server config",
   "private": true,
   "main": "./serve",
@@ -11,8 +11,8 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
-    "phant-meta-mongodb": "^1.0.2",
     "phant-manager-http": "git+ssh://git@github.com:sparkfun/phant-manager-sparkfun.git",
+    "phant-meta-mongodb": "^1.1.0",
     "phant-keychain-hex": "^0.2.1",
     "phant": "^2.5.3",
     "dotenv": "^0.2.7",
