@@ -3,7 +3,7 @@
 var Phant = require('phant'),
     dotenv = require('dotenv').load(),
     path = require('path'),
-    HttpManager = require('../phant-manager-sparkfun'),
+    HttpManager = require('phant-manager-sparkfun'),
     Keychain = require('phant-keychain-hex'),
     Meta = require('phant-meta-mongodb'),
     Storage = require('phant-stream-csv'),
