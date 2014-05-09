@@ -9,7 +9,11 @@ var Phant = require('phant'),
     Storage = require('phant-stream-csv'),
     Repeater = require('phant-output-repeater'),
     Throttler = require('phant-throttler-memcache'),
+    mailer = require('phant-notify-email')(),
     app = Phant();
+
+
+mailer.useSendmail();
 
 var keys = Keychain({
   publicSalt: process.env.PHANT_PUBLIC_SALT || 'public salt',
@@ -49,7 +53,8 @@ var httpInput = Phant.HttpInput({
 
 var httpManager = HttpManager({
   metadata: mongo,
-  keychain: keys
+  keychain: keys,
+  notifiers: [mailer]
 });
 
 Phant.HttpsServer.cert = process.env.SSL_CERT || './test.crt';
