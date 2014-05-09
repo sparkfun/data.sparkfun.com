@@ -9,9 +9,13 @@ var Phant = require('phant'),
     Storage = require('phant-stream-csv'),
     Repeater = require('phant-output-repeater'),
     Throttler = require('phant-throttler-memcache'),
-    mailer = require('phant-notify-email')(),
+    Mailer = require('phant-notify-email'),
     app = Phant();
 
+var mailer = Mailer({
+  from: 'data.sparkfun.com <data@sparkfun.com>',
+  subject: 'New data.sparkfun.com Stream: '
+});
 
 mailer.useSendmail();
 
