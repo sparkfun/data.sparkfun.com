@@ -58,6 +58,7 @@ var httpInput = Phant.HttpInput({
 var httpManager = HttpManager({
   metadata: mongo,
   keychain: keys,
+  validator: validator,
   notifiers: [mailer]
 });
 

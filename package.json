@@ -14,9 +14,9 @@
     "phant-manager-sparkfun": "git+ssh://git@github.com:sparkfun/phant-manager-sparkfun.git",
     "phant-meta-mongodb": "^1.2.3",
     "phant-keychain-hex": "^0.2.1",
-    "phant": "^2.7.1",
+    "phant": "^4.2.2",
     "dotenv": "^0.2.7",
-    "phant-output-repeater": "^1.1.0",
+    "phant-output-repeater": "^1.2.1",
     "phant-stream-csv": "^1.3.3",
     "phant-throttler-memcache": "^1.0.0",
     "phant-notify-email": "^0.3.0"
