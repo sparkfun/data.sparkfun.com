@@ -8,6 +8,7 @@ var Phant = require('phant'),
     Meta = require('phant-meta-mongodb'),
     Storage = require('phant-stream-csv'),
     Repeater = require('phant-output-repeater'),
+    Websocket = require('phant-output-websocket'),
     Throttler = require('phant-throttler-memcache'),
     Mailer = require('phant-notify-email'),
     app = Phant();
@@ -90,6 +91,20 @@ app.registerInput(httpInput);
 
 app.registerOutput(stream);
 app.registerOutput(httpOutput);
+
+app.registerOutput(
+  Websocket({
+    server: Phant.HttpServer.server,
+    keychain: keys
+  })
+);
+
+app.registerOutput(
+  Websocket({
+    server: Phant.HttpsServer.server,
+    keychain: keys
+  })
+);
 
 app.registerOutput(
   Repeater({
