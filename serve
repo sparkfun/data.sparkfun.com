@@ -63,12 +63,8 @@ var httpManager = HttpManager({
   notifiers: [mailer]
 });
 
-Phant.HttpsServer.cert = process.env.SSL_CERT || './test.crt';
-Phant.HttpsServer.key = process.env.SSL_KEY || './test.key';
-
 // start listening for connections
 Phant.HttpServer.listen(process.env.PHANT_PORT || 8080);
-Phant.HttpsServer.listen(process.env.PHANT_HTTPS_PORT || 443);
 
 // attach input to http server
 Phant.HttpServer.use(httpInput);
@@ -76,15 +72,11 @@ Phant.HttpServer.use(httpInput);
 // attach manager to http server
 Phant.HttpServer.use(httpManager);
 
-Phant.HttpsServer.use(httpInput);
-Phant.HttpsServer.use(httpManager);
-
 // register manager with phant
 app.registerManager(httpManager);
 
 // attach output to http server
 Phant.HttpServer.use(httpOutput);
-Phant.HttpsServer.use(httpOutput);
 
 // register input with phant
 app.registerInput(httpInput);
@@ -95,13 +87,6 @@ app.registerOutput(httpOutput);
 app.registerOutput(
   Websocket({
     server: Phant.HttpServer.server,
-    keychain: keys
-  })
-);
-
-app.registerOutput(
-  Websocket({
-    server: Phant.HttpsServer.server,
     keychain: keys
   })
 );
