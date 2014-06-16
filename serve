@@ -84,7 +84,7 @@ app.registerInput(httpInput);
 app.registerOutput(stream);
 app.registerOutput(httpOutput);
 
-app.registerOutput(
+/*app.registerOutput(
   Websocket({
     server: Phant.HttpServer.server,
     keychain: keys
@@ -97,4 +97,4 @@ app.registerOutput(
     port: process.env.PHANT_REPEATER_PORT || 5000
   })
 );
-
+*/
