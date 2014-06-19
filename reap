@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+var dotenv = require('dotenv').load(),
+    path = require('path'),
+    Meta = require('phant-meta-mongodb'),
+    Storage = require('phant-stream-csv'),
+    Reaper = require('phant-reaper');
+
+var mongo = Meta({
+  url: process.env.PHANT_MONGO_URL || 'mongodb://localhost/phant'
+});
+
+var stream = Storage({
+  directory: process.env.PHANT_STORAGEDIR || 'tmp',
+  cap: process.env.PHANT_CAP || 50 * 1024 * 1024, // 50mb
+  chunk: process.env.PHANT_CHUNK || 500 * 1024 // 500k
+});
+
+var reaper = new Reaper({
+  metadata: mongo,
+  storage: stream,
+  age: process.env.PHANT_REAPER_AGE || 7 * 24 * 60 * 60 * 1000 // 7 days
+});
+
+reaper.reap(function() {
+  process.exit();
+});
+
