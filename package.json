@@ -19,6 +19,7 @@
     "phant-notify-email": "^0.3.0",
     "phant-output-repeater": "^1.2.1",
     "phant-output-websocket": "^2.2.1",
+    "phant-reaper": "^0.1.0",
     "phant-stream-csv": "^1.3.3",
     "phant-throttler-memcache": "^1.0.0"
   }
