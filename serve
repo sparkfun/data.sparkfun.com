@@ -9,7 +9,7 @@ var Phant = require('phant'),
     Storage = require('phant-stream-csv'),
     Repeater = require('phant-output-repeater'),
     Websocket = require('phant-output-websocket'),
-    Throttler = require('phant-throttler-memcache'),
+    Throttler = require('phant-throttler-redis'),
     Mailer = require('phant-notify-email'),
     app = Phant();
 
@@ -47,7 +47,8 @@ var httpOutput = Phant.HttpOutput({
 });
 
 var throttler = Throttler({
-  host: process.env.PHANT_MEMCACHE_HOST || 'localhost:11211'
+  host: process.env.PHANT_REDIS_HOST || 'localhost',
+  port: process.env.PHANT_REDIS_PORT || 6379
 });
 
 var httpInput = Phant.HttpInput({
