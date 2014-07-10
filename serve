@@ -11,6 +11,7 @@ var Phant = require('phant'),
     Websocket = require('phant-output-websocket'),
     Throttler = require('phant-throttler-redis'),
     socket_redis = require('socket.io-redis'),
+    Statsd = require('phant-output-statsd'),
     Mailer = require('phant-notify-email'),
     app = Phant();
 
@@ -94,6 +95,13 @@ app.registerOutput(
       host: process.env.PHANT_REDIS_HOST || 'localhost',
       port: process.env.PHANT_REDIS_PORT || 6379
     })
+  })
+);
+
+app.registerOutput(
+  Statsd({
+    host: process.env.PHANT_STATSD_HOST || 'localhost',
+    port: process.env.PHANT_STATSD_PORT || 8125
   })
 );
 
