@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var dotenv = require('dotenv').load(),
+    path = require('path'),
+    Keychain = require('phant-keychain-hex');
+
+var keys = Keychain({
+  publicSalt: process.env.PHANT_PUBLIC_SALT || 'public salt',
+  privateSalt: process.env.PHANT_PRIVATE_SALT || 'private salt',
+  deleteSalt: process.env.PHANT_DELETE_SALT || 'delete salt'
+});
+
+var id = keys.getIdFromPublicKey(process.argv[2]);
+
+console.log(
+  path.join(
+    process.env.PHANT_STORAGEDIR || 'tmp',
+    id.slice(0, 4),
+    id.slice(4)
+  )
+);
