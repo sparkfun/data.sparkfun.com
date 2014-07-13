@@ -49,8 +49,6 @@ meta.each(function(err, stream) {
       if (reg.test(files[i]) === true) {
         split = files[i].split('.');
         matched[split[split.length - 1]] = split.slice(); // make a copy
-      } else {
-        console.log(files[i]);
       }
 
     }
