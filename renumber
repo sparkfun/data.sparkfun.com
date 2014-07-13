@@ -1,0 +1,82 @@
+#!/usr/bin/env node
+
+var dotenv = require('dotenv').load(),
+    path = require('path'),
+    fs = require('fs');
+    Meta = require('phant-meta-mongodb'),
+    Storage = require('phant-stream-csv'),
+    Keychain = require('phant-keychain-hex');
+
+var reg = new RegExp('stream.csv');
+
+var keys = Keychain({
+  publicSalt: process.env.PHANT_PUBLIC_SALT || 'public salt',
+  privateSalt: process.env.PHANT_PRIVATE_SALT || 'private salt',
+  deleteSalt: process.env.PHANT_DELETE_SALT || 'delete salt'
+});
+
+var meta = Meta({
+  url: process.env.PHANT_MONGO_URL || 'mongodb://localhost/phant'
+});
+
+var stream = Storage({
+  directory: process.env.PHANT_STORAGEDIR || 'tmp',
+  cap: process.env.PHANT_CAP || 50 * 1024 * 1024, // 50mb
+  chunk: process.env.PHANT_CHUNK || 500 * 1024 // 500k
+});
+
+meta.each(function(err, stream) {
+
+  var dir = path.join(
+    process.env.PHANT_STORAGEDIR || 'tmp',
+    stream.id.slice(0, 4),
+    stream.id.slice(4)
+  );
+
+  fs.readdir(dir, function(err, files) {
+
+    var matched = [],
+        split = [],
+        filtered = {};
+
+    if(err) {
+      return console.log(err);
+    }
+
+    // get all files
+    for (var i = 0, l = files.length; i < l; i++) {
+
+      if (reg.test(files[i]) === true) {
+        split = files[i].split('.');
+        matched[split[split.length - 1]] = split.slice(); // make a copy
+      } else {
+        console.log(files[i]);
+      }
+
+    }
+
+    // drop undefined indexes
+    matched = matched.filter(function(m) {
+      return typeof m !== 'undefined';
+    });
+
+    // convert to obj
+    matched.forEach(function(m, i) {
+      filtered[i] = m;
+    });
+
+    // reverse sort list and move files to tmp location
+    Object.keys(filtered).forEach(function(f, i) {
+      fs.renameSync(path.join(dir, filtered[f].join('.')), path.join(dir, 'tmp.stream.csv.' + i));
+    });
+
+    // move back from tmp location
+    for(i = Object.keys(filtered).length - 1; i >=0; i--) {
+      fs.renameSync(path.join(dir, 'tmp.stream.csv.' + i), path.join(dir, 'stream.csv.' + i));
+    }
+
+    console.log('moved stream ' + stream.id);
+
+  });
+
+});
