@@ -41,12 +41,12 @@ meta.each(function(err, stream) {
     }
 
     var command = 'cat $(ls ' + path.join(dir, 'stream.csv') +
-                  '* | sort -nr -t . -k 3,3) > ' + path.join(dir, 'reversed.csv') +
+                  '* | sort -n -t . -k 3,3) > ' + path.join(dir, 'join.csv') +
                   ' && rm ' + path.join(dir, 'stream.') + '* && ' +
                   'split -a 4 -C ' + (process.env.PHANT_CHUNK || 500 * 1024) + ' -d ' +
-                  path.join(dir, 'reversed.csv') + ' ' +
+                  path.join(dir, 'join.csv') + ' ' +
                   path.join(dir, 'stream.csv.') + ' && rm ' +
-                  path.join(dir, 'reversed.csv');
+                  path.join(dir, 'join.csv');
 
     exec(command, function(err) {
 
@@ -73,7 +73,11 @@ meta.each(function(err, stream) {
 
           var split = f.split('.');
 
-          split[2] = parseInt(split[2]);
+          split[2] = parseInt(split[2]) - 1;
+
+          if(split[2] === -1) {
+            split.splice(2, 1);
+          }
 
           fs.renameSync(path.join(dir, f), path.join(dir, split.join('.')));
 
