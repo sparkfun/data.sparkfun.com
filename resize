@@ -40,8 +40,8 @@ meta.each(function(err, stream) {
       return;
     }
 
-    var command = 'cat $(ls ' + path.join(dir, 'stream.csv') +
-                  '* | sort -n -t . -k 3,3) > ' + path.join(dir, 'join.csv') +
+    var command = 'cat $(ls -v' + path.join(dir, 'stream.csv') +
+                  '*) > ' + path.join(dir, 'join.csv') +
                   ' && rm ' + path.join(dir, 'stream.') + '* && ' +
                   'split -a 4 -C ' + (process.env.PHANT_CHUNK || 500 * 1024) + ' -d ' +
                   path.join(dir, 'join.csv') + ' ' +
