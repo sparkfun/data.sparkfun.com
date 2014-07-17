@@ -17,11 +17,10 @@
     "phant-manager-sparkfun": "sparkfun/phant-manager-sparkfun",
     "phant-meta-mongodb": "^2.0.0",
     "phant-notify-email": "^0.4.0",
-    "phant-output-repeater": "^1.2.1",
     "phant-output-statsd": "^0.2.1",
     "phant-output-websocket": "^2.3.1",
     "phant-reaper": "^1.0.0",
-    "phant-stream-csv": "^2.0.3",
+    "phant-stream-mongodb": "^2.0.2",
     "phant-throttler-redis": "^1.0.1",
     "socket.io-redis": "^0.1.3"
   }
