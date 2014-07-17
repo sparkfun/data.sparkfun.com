@@ -50,9 +50,10 @@ meta.each(function(err, stream) {
         return console.log('join error: ' + err + ' ' + stream.id);
       }
 
-      var read = fs.createReadStream(path.join(dir, 'join.csv'));
+      var read = fs.createReadStream(path.join(dir, 'join.csv')),
+          writer = storage.writeStream(stream.id);
 
-      read.pipe(fromCsv({objectMode: true, columns: true}));
+      read.pipe(fromCsv({objectMode: true, columns: true})).pipe(writer);
 
     });
 
