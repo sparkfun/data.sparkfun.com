@@ -7,10 +7,7 @@ var Phant = require('phant'),
     Keychain = require('phant-keychain-hex'),
     Meta = require('phant-meta-mongodb'),
     Storage = require('phant-stream-mongodb'),
-    Websocket = require('phant-output-websocket'),
     Throttler = require('phant-throttler-redis'),
-    socket_redis = require('socket.io-redis'),
-    Statsd = require('phant-output-statsd'),
     Mailer = require('phant-notify-email'),
     app = Phant();
 
@@ -84,22 +81,4 @@ app.registerInput(httpInput);
 
 app.registerOutput(stream);
 app.registerOutput(httpOutput);
-
-app.registerOutput(
-  Websocket({
-    server: Phant.HttpServer.server,
-    keychain: keys,
-    adapter: socket_redis({
-      host: process.env.PHANT_REDIS_HOST || 'localhost',
-      port: process.env.PHANT_REDIS_PORT || 6379
-    })
-  })
-);
-
-app.registerOutput(
-  Statsd({
-    host: process.env.PHANT_STATSD_HOST || 'localhost',
-    port: process.env.PHANT_STATSD_PORT || 8125
-  })
-);
 

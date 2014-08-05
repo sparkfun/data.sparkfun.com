@@ -13,16 +13,14 @@
   "dependencies": {
     "csv-streamify": "^1.0.0",
     "dotenv": "^0.4.0",
-    "phant": "^6.1.3",
+    "phant": "^6.2.0",
     "phant-keychain-hex": "^0.2.1",
     "phant-manager-sparkfun": "sparkfun/phant-manager-sparkfun",
-    "phant-meta-mongodb": "^2.0.0",
+    "phant-meta-mongodb": "^2.1.0",
     "phant-notify-email": "^0.4.0",
-    "phant-output-statsd": "^0.2.1",
-    "phant-output-websocket": "^2.3.1",
     "phant-reaper": "^1.0.0",
-    "phant-stream-mongodb": "^2.0.2",
-    "phant-throttler-redis": "^1.0.1",
-    "socket.io-redis": "^0.1.3"
+    "phant-stream-mongodb": "^2.1.0",
+    "phant-reaper": "^1.0.0",
+    "phant-throttler-redis": "^1.1.0"
   }
 }
