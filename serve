@@ -55,7 +55,8 @@ var throttler = Throttler({
 var httpInput = Phant.HttpInput({
   throttler: throttler,
   validator: validator,
-  keychain: keys
+  keychain: keys,
+  limit: 300
 });
 
 var httpManager = HttpManager({
