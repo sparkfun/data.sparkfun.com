@@ -7,8 +7,11 @@ var Phant = require('phant'),
     Keychain = require('phant-keychain-hex'),
     Meta = require('phant-meta-mongodb'),
     Storage = require('phant-stream-csv'),
+    MqttIn = require('phant-input-mqtt'),
+    MqttOut = require('phant-output-mqtt'),
     Throttler = require('phant-throttler-redis'),
     Mailer = require('phant-notify-email'),
+    redis = require('redis'),
     app = Phant();
 
 var mailer = Mailer({
@@ -82,4 +85,23 @@ app.registerInput(httpInput);
 
 app.registerOutput(stream);
 app.registerOutput(httpOutput);
+
+// mqtt out will use the same config
+var mqttIn = MqttIn({
+  keychain: keys,
+  port: 1883,
+  backend: {
+    type: 'redis',
+    redis: require('redis'),
+    port: process.env.PHANT_REDIS_PORT || 6379,
+    host: process.env.PHANT_REDIS_HOST || 'localhost',
+    return_buffers: true
+  }
+});
+
+// enable mqtt over websockets
+mqttIn.server.attachHttpServer(Phant.HttpServer.server);
+
+app.registerInput(mqttIn);
+app.registerOutput(MqttOut());
 

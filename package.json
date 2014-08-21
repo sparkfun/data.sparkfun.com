@@ -13,15 +13,16 @@
   "dependencies": {
     "dotenv": "^0.4.0",
     "phant": "^6.6.0",
-    "phant-input-mqtt": "^3.0.1",
+    "phant-input-mqtt": "^3.0.3",
     "phant-keychain-hex": "^0.2.1",
     "phant-manager-sparkfun": "sparkfun/phant-manager-sparkfun",
     "phant-meta-mongodb": "^2.1.0",
-    "phant-notify-email": "^0.4.0",
-    "phant-output-mqtt": "^2.0.0",
+    "phant-notify-email": "^0.5.0",
+    "phant-output-mqtt": "^2.0.2",
     "phant-reaper": "^1.0.0",
-    "phant-server-mqtt": "^1.0.1",
+    "phant-server-mqtt": "^2.0.0",
     "phant-stream-csv": "^2.0.3",
-    "phant-throttler-redis": "^1.1.0"
+    "phant-throttler-redis": "^1.1.0",
+    "redis": "^0.12.1"
   }
 }
