@@ -49,14 +49,14 @@ var httpOutput = Phant.HttpOutput({
 
 var throttler = Throttler({
   host: process.env.PHANT_REDIS_HOST || 'localhost',
-  port: process.env.PHANT_REDIS_PORT || 6379
+  port: process.env.PHANT_REDIS_PORT || 6379,
+  limit: 300
 });
 
 var httpInput = Phant.HttpInput({
   throttler: throttler,
   validator: validator,
-  keychain: keys,
-  limit: 300
+  keychain: keys
 });
 
 var httpManager = HttpManager({
@@ -89,6 +89,8 @@ app.registerOutput(httpOutput);
 
 // mqtt out will use the same config
 var mqttIn = MqttIn({
+  throttler: throttler,
+  validator: validator,
   keychain: keys,
   port: 1883,
   backend: {
@@ -104,5 +106,10 @@ var mqttIn = MqttIn({
 mqttIn.server.attachHttpServer(Phant.HttpServer.server);
 
 app.registerInput(mqttIn);
-app.registerOutput(MqttOut());
+app.registerOutput(
+  MqttOut({
+    validator: validator,
+    keychain: keys
+  })
+);
 
