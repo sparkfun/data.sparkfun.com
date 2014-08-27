@@ -16,7 +16,7 @@
     "phant-input-mqtt": "^3.0.3",
     "phant-keychain-hex": "^0.2.1",
     "phant-manager-sparkfun": "sparkfun/phant-manager-sparkfun",
-    "phant-meta-mongodb": "^2.1.0",
+    "phant-meta-mongodb": "^2.2.0",
     "phant-notify-email": "^0.5.0",
     "phant-output-mqtt": "^2.0.2",
     "phant-reaper": "^1.0.0",
