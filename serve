@@ -16,7 +16,8 @@ var Phant = require('phant'),
 
 var mailer = Mailer({
   from: 'data.sparkfun.com <data@sparkfun.com>',
-  subject: 'New data.sparkfun.com Stream: '
+  subject: 'New data.sparkfun.com Stream: ',
+  host: 'https://data.sparkfun.com'
 });
 
 mailer.useSendmail();
