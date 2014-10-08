@@ -40,6 +40,8 @@ meta.each(function(err, stream) {
       return;
     }
 
+    console.time(stream.id);
+
     var command = 'cat ' + path.join(dir, 'headers.csv') + ' > ' + 
                   path.join(dir, 'join.csv') + ' && cat $(ls -v ' + path.join(dir, 'stream.csv') +
                   '*) >> ' + path.join(dir, 'join.csv');
@@ -54,6 +56,10 @@ meta.each(function(err, stream) {
           writer = storage.writeStream(stream.id);
 
       read.pipe(fromCsv({objectMode: true, columns: true})).pipe(writer);
+
+      read.once('end', function() {
+        console.timeEnd(stream.id);
+      });
 
     });
 
