@@ -6,7 +6,7 @@ var Phant = require('phant'),
     HttpManager = require('phant-manager-sparkfun'),
     Keychain = require('phant-keychain-hex'),
     Meta = require('phant-meta-mongodb'),
-    Storage = require('phant-stream-csv'),
+    Storage = require('phant-stream-mongodb'),
     MqttIn = require('phant-input-mqtt'),
     MqttOut = require('phant-output-mqtt'),
     Throttler = require('phant-throttler-redis'),
@@ -33,9 +33,8 @@ var mongo = Meta({
 });
 
 var stream = Storage({
-  directory: process.env.PHANT_STORAGEDIR || 'tmp',
   cap: process.env.PHANT_CAP || 50 * 1024 * 1024, // 50mb
-  chunk: process.env.PHANT_CHUNK || 500 * 1024 // 500k
+  url: process.env.PHANT_MONGO_URL || 'mongodb://localhost/phant'
 });
 
 var validator = Phant.Validator({
