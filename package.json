@@ -13,7 +13,7 @@
   "dependencies": {
     "csv-streamify": "^1.0.0",
     "dotenv": "^0.4.0",
-    "exec-sync": "^0.1.6",
+    "execSync": "^1.0.2",
     "phant": "^6.7.1",
     "phant-input-mqtt": "sparkfun/phant-input-mqtt",
     "phant-keychain-hex": "^0.2.1",

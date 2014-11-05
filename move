@@ -3,7 +3,7 @@
 var dotenv = require('dotenv').load(),
     path = require('path'),
     fs = require('fs'),
-    execSync = require('exec-sync'),
+    execSync = require('execSync'),
     Meta = require('phant-meta-mongodb'),
     Storage = require('phant-stream-mongodb'),
     fromCsv = require('csv-streamify'),
@@ -60,20 +60,20 @@ function move(cb) {
 
   console.log(dir);
 
-  if(fs.existsSync(path.join(dir, 'stream.csv'))) {
+  if(!fs.existsSync(path.join(dir, 'stream.csv'))) {
     console.log(i + ' does not exist');
     i++;
     cb(move);
     return;
   }
 
-  var command = 'cat ' + path.join(dir, 'headers.csv') + ' > ' + 
-                path.join(dir, 'join.csv') + ' && cat $(ls -v ' + path.join(dir, 'stream.csv') +
-                '*) >> ' + path.join(dir, 'join.csv');
+  var headers = 'cat ' + path.join(dir, 'headers.csv') + ' > ' + path.join(dir, 'join.csv');
+  var join = 'cat $(ls -v ' + path.join(dir, 'stream.csv') + '*) >> ' + path.join(dir, 'join.csv');
 
   try {
 
-    execSync(command);
+    execSync.run(headers);
+    execSync.run(join);
 
     var read = fs.createReadStream(path.join(dir, 'join.csv')),
         writer = storage.writeStream(streams[i].id);
