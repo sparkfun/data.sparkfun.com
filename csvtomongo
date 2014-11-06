@@ -31,7 +31,7 @@ if(!fs.existsSync(path.join(dir, 'stream.csv'))) {
 }
 
 var headers = 'cat ' + path.join(dir, 'headers.csv') + ' > ' + path.join(dir, 'join.csv');
-var join = 'cat $(ls -v ' + path.join(dir, 'stream.csv') + '*) >> ' + path.join(dir, 'join.csv');
+var join = 'cat $(ls -v -r ' + path.join(dir, 'stream.csv') + '*) >> ' + path.join(dir, 'join.csv');
 
 try {
 

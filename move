@@ -23,6 +23,8 @@ meta.list(function(err, streams) {
 
   for(var i = 0; i < streams.length; i++) {
 
+    console.log(i + ' moving ' + streams[i].id);
+
     result = execSync.exec('./csvtomongo ' + streams[i].id);
 
     console.log(i + ' ' + result.stdout);
