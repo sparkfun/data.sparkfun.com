@@ -15,7 +15,7 @@
     "dotenv": "^0.4.0",
     "execSync": "^1.0.2",
     "phant": "^6.7.1",
-    "phant-input-mqtt": "sparkfun/phant-input-mqtt",
+    "phant-input-mqtt": "^3.0.3",
     "phant-keychain-hex": "^0.2.1",
     "phant-manager-sparkfun": "sparkfun/phant-manager-sparkfun",
     "phant-meta-mongodb": "^2.2.1",
