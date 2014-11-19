@@ -20,7 +20,9 @@ var mailer = Mailer({
   host: 'https://data.sparkfun.com'
 });
 
-mailer.useSendmail();
+mailer.useSendmail({
+  path: '/usr/sbin/sendmail'
+});
 
 var keys = Keychain({
   publicSalt: process.env.PHANT_PUBLIC_SALT || 'public salt',
