@@ -31,12 +31,12 @@ var keys = Keychain({
 });
 
 var mongo = Meta({
-  url: process.env.PHANT_MONGO_URL || 'mongodb://localhost/phant'
+  url: process.env.PHANT_MONGO_URL || 'mongodb://phantmongo4,phantmongo5,phantmongo6,phantmongo7/phant'
 });
 
 var stream = Storage({
   cap: process.env.PHANT_CAP || 50 * 1024 * 1024, // 50mb
-  url: process.env.PHANT_MONGO_URL || 'mongodb://localhost/phant'
+  url: process.env.PHANT_MONGO_URL || 'mongodb://phantmongo4,phantmongo5,phantmongo6,phantmongo7/phant'
 });
 
 var validator = Phant.Validator({
